@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "name": "mail",
+  "alias": "x-mail",
+  "builds": [
+      { "src": "app.js", "use": "@now/node-server" },
+      { "src": "public/*", "use": "@now/static" }
+  ],
+  "routes": [
+      { "src": "^/(.*)", "dest": "app.js" }
+  ]
+}

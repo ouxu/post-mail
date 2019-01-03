@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mail Poster</title>
+    <style>
+      body {
+        padding: 50px;
+        font: 14px Helvetica, Arial;
+      }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+  </head>
+  <body>
+    <div class="container">
+      <form method="post" enctype="multipart/form-data" id="userConfigForm">
+        <div class="row">
+          <div class="col-sm">
+            <h3>邮件客户端配置</h3>
+            <div class="input-group input-group-sm mb-3">
+              <div class="input-group-prepend"><span class="input-group-text">账号</span></div>
+              <input name="user" type="text" class="form-control" />
+            </div>
+
+            <div class="input-group input-group-sm mb-3">
+              <div class="input-group-prepend"><span class="input-group-text">密码</span></div>
+              <input name="pass" type="text" class="form-control" />
+            </div>
+
+            <div class="input-group input-group-sm mb-3">
+              <div class="input-group-prepend"><span class="input-group-text">服务商</span></div>
+              <input name="service" type="text" class="form-control" />
+            </div>
+            <div class="input-group input-group-sm mb-3">
+              <div class="input-group-prepend"><span class="input-group-text">发件人姓名</span></div>
+              <input name="name" type="text" class="form-control" />
+            </div>
+            <div class="input-group input-group-sm mb-3">
+              <div class="input-group-prepend"><span class="input-group-text">目标邮箱</span></div>
+              <input name="email" type="text" class="form-control" />
+            </div>
+
+            <div class="input-group input-group-sm mb-3">
+              <div class="input-group-prepend"><span class="input-group-text">主题</span></div>
+              <input name="subject" type="text" class="form-control" />
+            </div>
+
+            <div class="input-group input-group-sm mb-3">
+              <label>目标数据源</label>
+              <input
+                name="file"
+                type="file"
+                class="form-control-file"
+                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              />
+            </div>
+          </div>
+          <div class="col-sm">
+            <h3>邮件内容</h3>
+            <div class="form-group">
+              <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
+            </div>
+            <div class="input-group input-group-sm mb-3">
+              <label>附件</label> <input name="attachments" type="file" multiple class="form-control-file" />
+            </div>
+            <button id="userConfigFormBtn" type="submit" class="btn btn-primary btn-sm mb-3">发送</button>
+            <div id="userConfigFormAlert" class="alert alert-warning alert-dismissible fade hide" role="alert">
+                <span id="userConfigFormAlertTxt">发送成功</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        $('form#userConfigForm').submit(function(e) {
+          e.preventDefault();
+          $('#userConfigFormBtn').text('loading...');
+          var formData = new FormData(this);
+          $.ajax({
+            url: '/',
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+              if (data && data.success) {
+                alert('发送成功!');
+              } else {
+                alert('发送失败!');
+              }
+              $('#userConfigFormBtn').text('发送');
+            },
+            error: function(data) {
+              $('#userConfigFormBtn').text('发送');
+            }
+          });
+          return false;
+        });
+      });
+    </script>
+  </body>
+</html>

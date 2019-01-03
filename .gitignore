@@ -1,0 +1,16 @@
+# idea
+.idea/
+.vscode/
+
+# config
+
+# dependencies
+/node_modules
+package-lock.json
+
+# production
+
+# misc
+.DS_Store
+npm-debug.log*
+**.log
